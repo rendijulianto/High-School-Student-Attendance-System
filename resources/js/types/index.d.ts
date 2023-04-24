@@ -5,6 +5,15 @@ export interface User {
     email_verified_at: string;
 }
 
+export interface Teacher {
+    id: number;
+    name: string;
+    email: string;
+    email_verified_at: string;
+    nip: string;
+    gender: string;
+}
+
 export interface Post {
     id: number;
     title: string;
@@ -22,6 +31,11 @@ export type PageProps<
 > = T & {
     auth: {
         user: User;
+    };
+    teachers: {
+        data: Teacher[];
+        links: PaginationLink[];
+        search: string | null;
     };
     posts: {
         data: Post[];

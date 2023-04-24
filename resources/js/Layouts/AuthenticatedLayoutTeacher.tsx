@@ -31,43 +31,7 @@ export default function Authenticated({
                                     href={route("dashboard")}
                                     active={route().current("dashboard")}
                                 >
-                                    Dashboard <i className="fas fa-home"></i>
-                                </NavLink>
-                                <NavLink
-                                    href={route("teachers.index")}
-                                    active={route().current("teachers.*")}
-                                >
-                                    Guru
-                                </NavLink>
-                                <NavLink
-                                    href={route("posts.index")}
-                                    active={route().current("posts.*")}
-                                >
-                                    Siswa
-                                </NavLink>
-                                <NavLink
-                                    href={route("posts.index")}
-                                    active={route().current("posts.*")}
-                                >
-                                    Kelas
-                                </NavLink>
-                                <NavLink
-                                    href={route("posts.index")}
-                                    active={route().current("posts.*")}
-                                >
-                                    Mata Pelajaran
-                                </NavLink>
-                                <NavLink
-                                    href={route("posts.index")}
-                                    active={route().current("posts.*")}
-                                >
-                                    Jadwal
-                                </NavLink>
-                                <NavLink
-                                    href={route("posts.index")}
-                                    active={route().current("posts.*")}
-                                >
-                                    Laporan
+                                    Dashboard
                                 </NavLink>
                                 <NavLink
                                     href={route("posts.index")}
