@@ -103,6 +103,6 @@ class PostController extends Controller
     {
         $post->delete();
 
-        return Redirect::route('posts.index');
+        return Inertia::location(route('posts.index'));
     }
 }

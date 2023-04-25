@@ -8,19 +8,23 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+// Address
+use Illuminate\Mail\Mailables\Address;
 
 class SendEmailRegisterTeacher extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $password;
+    public $teacher;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($password)
+    public function __construct($teacher, $password)
     {
         $this->password = $password;
+        $this->teacher = $teacher;
     }
 
 
@@ -30,6 +34,7 @@ class SendEmailRegisterTeacher extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new Address('noreply@kebutuhansosmed.com', 'Sistem Pencatatan Kehadiran Siswa'),
             subject: 'Selamat Datang di Aplikasi Pencatatan Kehadiran Siswa',
         );
     }
@@ -41,6 +46,10 @@ class SendEmailRegisterTeacher extends Mailable
     {
         return new Content(
             view: 'email.register-teacher',
+            with: [
+                'teacher' => $this->teacher,
+                'password' => $this->password,
+            ],
         );
     }
 

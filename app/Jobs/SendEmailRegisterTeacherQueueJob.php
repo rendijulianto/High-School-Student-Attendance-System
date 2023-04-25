@@ -10,21 +10,22 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Mail\SendEmailRegisterTeacher;
 use Mail;
+use App\Models\Teacher;
 
 
 class SendEmailRegisterTeacherQueueJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $send_email;
+    public $teacher;
     public $password;
 
     /**
      * Create a new job instance.
      */
-    public function __construct($send_email,$password)
+    public function __construct($id,$password)
     {
-        $this->send_email = $send_email;
+        $this->teacher = Teacher::find($id);
         $this->password = $password;
     }
 
@@ -33,7 +34,7 @@ class SendEmailRegisterTeacherQueueJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $email = new SendEmailRegisterTeacher($this->password);
-        Mail::to($this->send_email)->send($email);
+        $email = new SendEmailRegisterTeacher($this->teacher, $this->password);
+        Mail::to($this->teacher->email)->send($email);
     }
 }

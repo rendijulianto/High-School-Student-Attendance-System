@@ -14,5 +14,6 @@ class Teacher extends Model
         'email',
         'password',
         'nip',
+        'gender',
     ];
 }

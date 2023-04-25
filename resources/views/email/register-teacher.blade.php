@@ -42,7 +42,7 @@
 			</tr>
 		<table width="625">
 			<tr>
-				<td class="text2">Jember, 16 mei 2019</td>
+				<td class="text2">Bandung, {{ date('d-m-Y') }}</td>
 			</tr>
 		</table>
 		</table>
@@ -60,7 +60,7 @@
 		<table width="625">
 			<tr>
 		       <td>
-			       <font size="2">Kpd yth.<br>Bapak / Ibu Guru Rendi / Rina<br>Di tempat</font>
+			       <font size="2">Kpd yth.<br> {{ $teacher->gender == 'L' ? 'Bapak' : 'Ibu' }} <b>{{ $teacher->name }}</b><br>Di tempat</font>
 		       </td>
 		    </tr>
 		</table>
@@ -78,19 +78,19 @@
 		<table>
             <tr class="text2">
 				<td>NIP </td>
-				<td width="541">: 123456789</td>
+				<td width="541">: {{ $teacher->nip > 0 ? $teacher->nip : '-' }}</td>
 			</tr>
 			<tr class="text2">
 				<td>Nama </td>
-				<td width="541">: Rendi Jaya</td>
+				<td width="541">: {{ $teacher->name }}</td>
 			</tr>
 			<tr>
 				<td>Email</td>
-				<td width="525">: rendijulianto@gmail.com </td>
+				<td width="525">: <b>{{ $teacher->email }}</b> </td>
 			</tr>
 			<tr>
 				<td>Password</td>
-				<td width="525">: <b>123456</b> </td>
+				<td width="525">: <b>{{ $password }}</b> </td>
 			</tr>
 		</table>
 		<br>

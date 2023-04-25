@@ -26,6 +26,13 @@ interface PaginationLink {
     active: boolean;
 }
 
+interface PaginationMeta {
+    perPage: number;
+    lastPage: number;
+    currentPage: number;
+    total: number;
+}
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
@@ -36,6 +43,7 @@ export type PageProps<
         data: Teacher[];
         links: PaginationLink[];
         search: string | null;
+        pagination: PaginationMeta;
     };
     posts: {
         data: Post[];
@@ -45,5 +53,16 @@ export type PageProps<
     search: string | null;
     post: Post;
     teacher: Teacher;
-    totalData: number | null;
+    flash: {
+        message: string | null;
+        success: string | null;
+        info: string | null;
+        warning: string | null;
+        error: string | null;
+    };
+    perPage: number;
+    lastPage: number;
+    currentPage: number;
+    totalData: number;
+    params: any;
 };

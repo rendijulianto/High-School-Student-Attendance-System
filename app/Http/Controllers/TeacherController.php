@@ -56,9 +56,7 @@ class TeacherController extends Controller
         $path = $request->file('file')->getRealPath();
 
         $data = Excel::import(new \App\Imports\TeachersImport, $path);
-
-
-        return Redirect::route('teachers.index');
+        return Redirect::route('teachers.index')->with('message', 'Berhasil menambahkan data');
     }
 
 
@@ -82,14 +80,15 @@ class TeacherController extends Controller
                 'gender' => $request->gender,
               ]
             );
+      
 
-            dispatch(new \App\Jobs\SendEmailRegisterTeacherQueueJob($request->email, $password));
+            dispatch(new \App\Jobs\SendEmailRegisterTeacherQueueJob($teacher->id, $password));
             DB::commit();
-            return Redirect::route('teachers.index');
+            return Redirect::route('teachers.index')->with('message', 'Berhasil menambahkan data');
         } catch (\Throwable $th) {
             DB::rollback();
             throw $th;
-            return Redirect::route('teachers.create');
+            return Redirect::route('teachers.create')->with('error', 'Gagal menambahkan data');
         }
     }
 
@@ -123,10 +122,10 @@ class TeacherController extends Controller
                 'nip' => $request->nip,
             ]);
             DB::commit();
-            return Redirect::route('teachers.index');
+            return Redirect::route('teachers.index')->with('message', 'Berhasil mengubah data');
         } catch (\Throwable $th) {
             DB::rollback();
-            return Redirect::route('teachers.edit', $teacher->id);
+            return Redirect::route('teachers.edit', $teacher->id)->with('error', 'Gagal mengubah data');
         }
     }
 
@@ -135,14 +134,8 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
-        DB::beginTransaction();
-        try {
-            $teacher->delete();
-            DB::commit();
-            return Redirect::route('teachers.index');
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return Redirect::route('teachers.index');
-        }
+        $teacher->delete();
+        request()->session()->flash('message', 'Berhasil menghapus data');
+        return Inertia::location(route('teachers.index'));
     }
 }
