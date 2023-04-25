@@ -44,5 +44,6 @@ export type PageProps<
     };
     search: string | null;
     post: Post;
+    teacher: Teacher;
     totalData: number | null;
 };

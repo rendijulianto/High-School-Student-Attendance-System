@@ -28,12 +28,12 @@
 	<center>
 		<table>
 			<tr>
-				<td><img src="LOGO.jpg" width="90" height="90"></td>
+				<td><img src="https://sekolahpedia.id/medias/logosekolah/SMKS%20PASUNDAN%202%20BANDUNG.png" width="90" height="90"></td>
 				<td>
 				<center>
-					<font size="5"><b>SMK BAITUL HIKAH</b></font><br>
+					<font size="5"><b>SMK PASUNDAN 2 BANDUNG</b></font><br>
 					<font size="2">Bidang Keahlian : Bisnis dan Menejemen - Teknologi informasi dan Komunikasi</font><br>
-					<font size="2"><i>Jln Cut Nya'Dien No. 02 Kode Pos : 68173 Telp./Fax (0331)758005 Tempurejo Jember Jawa Timur</i></font>
+					<font size="2"><i>Jln Maleber No. 02 Kode Pos : 68173 Telp./Fax (0331)758005 Tempurejo Jember Jawa Barat</i></font>
 				</center>
 				</td>
 			</tr>
@@ -53,14 +53,14 @@
 			</tr>
 			<tr>
 				<td>Perihal</td>
-				<td width="564">: -</td>
+				<td width="564">: Pembuatan Akun Guru</td>
 			</tr>
 		</table>
 		<br>
 		<table width="625">
 			<tr>
 		       <td>
-			       <font size="2">Kpd yth.<br>Siswa Smk Baitul Hikmah kelas x<br>Di tempat</font>
+			       <font size="2">Kpd yth.<br>Bapak / Ibu Guru Rendi / Rina<br>Di tempat</font>
 		       </td>
 		    </tr>
 		</table>
@@ -68,45 +68,43 @@
 		<table width="625">
 			<tr>
 		       <td>
-			       <font size="2">Assalamu'alaikum wr.wb<br>Dalam rangka praktikum simulasi digital yg jatuh pada tanggal 16 mei 2019
-Siswa smk baitul hikmah <b>kelas X</b> akan mengadakan peraktikum, jadi di harapkan siswa di minta hadir
-pada tempat yang sudah di siapkan.</font>
+			       <font size="2">Assalamu'alaikum wr.wb<br>
+                    Dengan ini, memberitahukan bahwa akun guru anda telah dibuat oleh admin. Berikut adalah data akun anda :
 		       </td>
 		    </tr>
 		</table>
 		<br>
 		</table>
 		<table>
+            <tr class="text2">
+				<td>NIP </td>
+				<td width="541">: 123456789</td>
+			</tr>
 			<tr class="text2">
-				<td>Hari Tanggal</td>
-				<td width="541">: <b>Selasa/16 mei 2019</b></td>
+				<td>Nama </td>
+				<td width="541">: Rendi Jaya</td>
 			</tr>
 			<tr>
-				<td>Jam</td>
-				<td width="525">: 08:30</td>
+				<td>Email</td>
+				<td width="525">: rendijulianto@gmail.com </td>
 			</tr>
 			<tr>
-				<td>Tempat</td>
-				<td width="525">: Ruang lap komputer</td>
+				<td>Password</td>
+				<td width="525">: <b>123456</b> </td>
 			</tr>
 		</table>
 		<br>
 		<table width="625">
 			<tr>
 		       <td>
-			       <font size="2">Diharapkan atas kehadiranya, Demikian surat ini di sampaikan, atas perhatian dan kerjasamanya kami
-ucapkan terima kasih.<br><br>Wassalamu'alaikum wr.wb.
+			       <font size="2">Diharapkan untuk segera mengganti password anda setelah login. Terima kasih atas perhatiannya.<br>
+                    Wassalamu'alaikum wr.wb
 </font>
 		       </td>
 		    </tr>
 		</table>
 		<br>
-		<table width="625">
-			<tr>
-				<td width="430"><br><br><br><br></td>
-				<td class="text" align="center">Wali kelas<br><br><br><br>Bpk Fauzy.s.kom</td>
-			</tr>
-	     </table>
+
 	</center>
 </body>
 </html>

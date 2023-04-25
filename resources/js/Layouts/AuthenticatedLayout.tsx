@@ -5,6 +5,7 @@ import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";
+import { FaChalkboardTeacher } from "react-icons/fa";
 
 export default function Authenticated({
     user,
@@ -37,7 +38,10 @@ export default function Authenticated({
                                     href={route("teachers.index")}
                                     active={route().current("teachers.*")}
                                 >
-                                    Guru
+                                    <span className="flex items-center">
+                                        Guru
+                                        <FaChalkboardTeacher className="ml-2" />
+                                    </span>
                                 </NavLink>
                                 <NavLink
                                     href={route("posts.index")}

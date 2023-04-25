@@ -22,10 +22,10 @@ class StoreTeacherRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name'  => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:teachers'],
             'nip' => ['nullable', 'string', 'max:255', 'unique:teachers'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
 
@@ -37,12 +37,10 @@ class StoreTeacherRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Nama tidak boleh kosong',
-            'email.required' => 'Email tidak boleh kosong',
+            'first_name.required' => 'Nama depan harus diisi',
+            'email.required' => 'Email harus diisi',
             'email.unique' => 'Email sudah terdaftar',
             'nip.unique' => 'NIP sudah terdaftar',
-            'password.required' => 'Password tidak boleh kosong',
-            'password.confirmed' => 'Password tidak sama',
         ];
     }
 }

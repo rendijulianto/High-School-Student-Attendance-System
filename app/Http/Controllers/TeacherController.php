@@ -6,6 +6,10 @@ use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
+// StoreTeacherRequest
+use App\Http\Requests\StoreTeacherRequest;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class TeacherController extends Controller
@@ -15,7 +19,7 @@ class TeacherController extends Controller
      */
     public function index(Request $request)
     {
-       
+
         $search = $request->get('search') ?? '';
         $teachers = Teacher::latest()->where('name', 'like', '%' . $search . '%')->orWhere('email', 'like', '%' . $search . '%')->paginate(100);
         $totalData = Teacher::count();
@@ -31,11 +35,62 @@ class TeacherController extends Controller
     }
 
     /**
+     * Import teacher from excel.
+     */
+    public function import()
+    {
+        return Inertia::render('Teacher/Import');
+
+    }
+
+
+    /**
+     * Import teacher from excel.
+     */
+    public function importStore(Request $request)
+    {
+        // ambil file yang diupload
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls|max:2048',
+        ]);
+        $path = $request->file('file')->getRealPath();
+
+        $data = Excel::import(new \App\Imports\TeachersImport, $path);
+
+
+        return Redirect::route('teachers.index');
+    }
+
+
+    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTeacherRequest $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $request->merge([
+                'password' => bcrypt($request->password)
+            ]);
+            $password = rand(100000, 999999);
+            $teacher = Teacher::create(
+              [
+                'name' => $request->first_name . ' ' . $request->last_name,
+                'email' => $request->email,
+                'password' => bcrypt($password),
+                'nip' => $request->nip,
+                'gender' => $request->gender,
+              ]
+            );
+
+            dispatch(new \App\Jobs\SendEmailRegisterTeacherQueueJob($request->email, $password));
+            DB::commit();
+            return Redirect::route('teachers.index');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            throw $th;
+            return Redirect::route('teachers.create');
+        }
     }
 
     /**
@@ -51,7 +106,7 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
-        //
+        return Inertia::render('Teacher/Edit', ['teacher' => $teacher]);
     }
 
     /**
@@ -59,7 +114,20 @@ class TeacherController extends Controller
      */
     public function update(Request $request, Teacher $teacher)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $teacher->update([
+                'name' => $request->first_name . ' ' . $request->last_name,
+                'email' => $request->email,
+                'gender' => $request->gender,
+                'nip' => $request->nip,
+            ]);
+            DB::commit();
+            return Redirect::route('teachers.index');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return Redirect::route('teachers.edit', $teacher->id);
+        }
     }
 
     /**
@@ -67,6 +135,14 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $teacher->delete();
+            DB::commit();
+            return Redirect::route('teachers.index');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return Redirect::route('teachers.index');
+        }
     }
 }
