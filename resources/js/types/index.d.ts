@@ -65,4 +65,5 @@ export type PageProps<
     currentPage: number;
     totalData: number;
     params: any;
+    links: PaginationLink[];
 };

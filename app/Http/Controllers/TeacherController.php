@@ -21,9 +21,9 @@ class TeacherController extends Controller
     {
 
         $search = $request->get('search') ?? '';
-        $teachers = Teacher::latest()->where('name', 'like', '%' . $search . '%')->orWhere('email', 'like', '%' . $search . '%')->paginate(100);
+        $teachers = Teacher::latest()->where('name', 'like', '%' . $search . '%')->orWhere('email', 'like', '%' . $search . '%')->paginate(10)->withQueryString();
         $totalData = Teacher::count();
-        return Inertia::render('Teacher/Index', ['teachers' => $teachers, 'search' => $search, 'totalData' => $totalData]);
+        return Inertia::render('Teacher/Index', ['teachers' => $teachers, 'totalData' => $totalData]);
     }
 
     /**
