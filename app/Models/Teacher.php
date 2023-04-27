@@ -16,4 +16,5 @@ class Teacher extends Model
         'nip',
         'gender',
     ];
+  
 }

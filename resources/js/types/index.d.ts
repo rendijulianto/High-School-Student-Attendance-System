@@ -14,6 +14,15 @@ export interface Teacher {
     gender: string;
 }
 
+export interface Student {
+    id: number;
+    name: string;
+    email: string;
+    email_verified_at: string;
+    nis: string;
+    gender: string;
+}
+
 export interface Post {
     id: number;
     title: string;
@@ -42,9 +51,22 @@ export type PageProps<
     teachers: {
         data: Teacher[];
         links: PaginationLink[];
+        total: number;
+        from: number;
+        to: number;
         search: string | null;
         pagination: PaginationMeta;
     };
+    students: {
+        data: Student[];
+        links: PaginationLink[];
+        total: number;
+        from: number;
+        to: number;
+        search: string | null;
+        pagination: PaginationMeta;
+    };
+
     posts: {
         data: Post[];
         links: PaginationLink[];
@@ -53,6 +75,7 @@ export type PageProps<
     search: string | null;
     post: Post;
     teacher: Teacher;
+    student: Student;
     flash: {
         message: string | null;
         success: string | null;

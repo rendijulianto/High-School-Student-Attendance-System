@@ -6,7 +6,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 import { FaDownload, FaPlusCircle, FaRegFileExcel } from "react-icons/fa";
 export default function Teacher(
-    { auth, teachers, flash, search }: PageProps,
+    { auth, students, flash, search }: PageProps,
     props: any
 ) {
     const { data, setData, get } = useForm({
@@ -15,7 +15,7 @@ export default function Teacher(
     });
 
     useEffect(() => {
-        get(route("teachers.index"), {
+        get(route("students.index"), {
             preserveState: true,
             replace: true,
             preserveScroll: true,
@@ -59,7 +59,7 @@ export default function Teacher(
                                     {/* Jika ada props message */}
                                     <div className="flex items-center space-x-4">
                                         <Link
-                                            href={route("teachers.create")}
+                                            href={route("students.create")}
                                             className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center space-x-2"
                                         >
                                             Tambah
@@ -67,7 +67,7 @@ export default function Teacher(
                                         </Link>
 
                                         <Link
-                                            href={route("teachers.import")}
+                                            href={route("students.import")}
                                             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center space-x-2"
                                         >
                                             Import
@@ -75,7 +75,7 @@ export default function Teacher(
                                         </Link>
 
                                         <Link
-                                            href={route("teachers.create")}
+                                            href={route("students.create")}
                                             className=" bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex items-center space-x-2"
                                         >
                                             Contoh{" "}
@@ -149,10 +149,10 @@ export default function Teacher(
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {teachers.data.map((teacher: any) => (
+                                        {students.data.map((student: any) => (
                                             <tr
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                                                key={teacher.id}
+                                                key={student.id}
                                             >
                                                 <th
                                                     scope="row"
@@ -160,33 +160,33 @@ export default function Teacher(
                                                 >
                                                     <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
                                                         <span className="font-medium text-gray-600 dark:text-gray-300">
-                                                            {teacher.name[0].toUpperCase()}
+                                                            {student.name[0].toUpperCase()}
                                                         </span>
                                                     </div>
                                                     <div className="pl-3">
                                                         <div className="text-base font-semibold">
-                                                            {teacher.name}
+                                                            {student.name}
                                                         </div>
                                                         <div className="font-normal text-gray-500">
-                                                            {teacher.nip}
+                                                            {student.nip}
                                                         </div>
                                                     </div>
                                                 </th>
                                                 <td className="px-6 py-4">
-                                                    {teacher.email}
+                                                    {student.email}
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    {teacher.gender === "L"
+                                                    {student.gender === "L"
                                                         ? "Laki-laki"
                                                         : "Perempuan"}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <Link
                                                         href={route(
-                                                            "teachers.edit",
+                                                            "students.edit",
                                                             {
-                                                                teacher:
-                                                                    teacher.id,
+                                                                student:
+                                                                    student.id,
                                                             }
                                                         )}
                                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:text-blue-800 dark:hover:text-blue-400 transition-colors duration-200 flex items-center space-x-2"
@@ -196,7 +196,7 @@ export default function Teacher(
                                                 </td>
                                             </tr>
                                         ))}
-                                        {teachers.data.length === 0 && (
+                                        {students.data.length === 0 && (
                                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                 <td
                                                     className="w-4 p-4"
@@ -216,10 +216,10 @@ export default function Teacher(
                                     </tbody>
                                 </table>
                                 <Pagination
-                                    links={teachers.links}
-                                    total={teachers.total}
-                                    to={teachers.to}
-                                    from={teachers.from}
+                                    links={students.links}
+                                    total={students.total}
+                                    to={students.to}
+                                    from={students.from}
                                 />
                             </div>
                         </div>

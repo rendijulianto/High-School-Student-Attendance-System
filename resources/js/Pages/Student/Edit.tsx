@@ -2,24 +2,24 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { Inertia } from "@inertiajs/inertia";
 import { PageProps } from "@/types";
-const Edit = ({ auth, teacher }: PageProps) => {
+const Edit = ({ auth, student }: PageProps) => {
     const { data, setData, errors, put } = useForm({
         // first name didapat dari name yang dipecah berdasarkan spasi
-        first_name: teacher.name.split(" ")[0] || "",
-        last_name: teacher.name.split(" ")[1] || "",
-        email: teacher.email || "",
-        gender: teacher.gender || "",
-        nip: teacher.nip || "",
+        first_name: student.name.split(" ")[0] || "",
+        last_name: student.name.split(" ")[1] || "",
+        email: student.email || "",
+        gender: student.gender || "",
+        nip: student.nis || "",
     });
 
     function handleSubmit(e: any) {
         e.preventDefault();
-        put(route("teachers.update", teacher.id));
+        put(route("students.update", student.id));
     }
 
     const handleDelete = async () => {
         if (confirm("Apakah anda yakin ingin menghapus data ini?")) {
-            Inertia.delete(route("teachers.destroy", teacher.id));
+            Inertia.delete(route("students.destroy", student.id));
         }
     };
 

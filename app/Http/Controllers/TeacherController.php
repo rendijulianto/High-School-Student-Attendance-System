@@ -6,7 +6,6 @@ use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
-// StoreTeacherRequest
 use App\Http\Requests\StoreTeacherRequest;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -21,9 +20,9 @@ class TeacherController extends Controller
     {
 
         $search = $request->get('search') ?? '';
-        $teachers = Teacher::latest()->where('name', 'like', '%' . $search . '%')->orWhere('email', 'like', '%' . $search . '%')->paginate(10)->withQueryString();
+        $teachers = Teacher::latest()->where('name', 'like', '%' . $search . '%')->orWhere('email', 'like', '%' . $search . '%')->orWhere('nip', 'like', '%' . $search . '%')->paginate(10)->withQueryString();
         $totalData = Teacher::count();
-        return Inertia::render('Teacher/Index', ['teachers' => $teachers, 'totalData' => $totalData]);
+        return Inertia::render('Teacher/Index', ['teachers' => $teachers, 'totalData' => $totalData, 'search' => $search, 'url' => $request->url()]);
     }
 
     /**

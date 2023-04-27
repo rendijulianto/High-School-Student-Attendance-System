@@ -1,6 +1,16 @@
 import { PageProps, PaginationLink } from "@/types";
 import { Link } from "@inertiajs/react";
-export default function Pagination({ links }: { links: PaginationLink[] }) {
+export default function Pagination({
+    links,
+    total,
+    from,
+    to,
+}: {
+    links: PaginationLink[];
+    total: number;
+    from: number;
+    to: number;
+}) {
     function getClassName(active: boolean): string {
         if (active) {
             return "px-3 py-2 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white";
@@ -129,15 +139,31 @@ export default function Pagination({ links }: { links: PaginationLink[] }) {
             className="flex items-center justify-between pt-4"
             aria-label="Pagination"
         >
+            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+                Showing{" "}
+                <span className="font-semibold text-gray-900 dark:text-white">
+                    {new Intl.NumberFormat().format(from)} -{" "}
+                    {new Intl.NumberFormat().format(to)}
+                </span>{" "}
+                of{" "}
+                <span className="font-semibold text-gray-900 dark:text-white">
+                    {new Intl.NumberFormat().format(total)}
+                </span>
+            </span>
             <ul className="inline-flex items-center -space-x-px">
                 {links.map((link) => {
                     return (
-                        <li>
+                        <li key={link.label}>
                             <Link
                                 href={link.url ? link.url : "#"}
                                 className={getClassName(link.active)}
                             >
-                                {link.label}
+                                {/* jika label Next &raquo; */}
+                                {link.label === "Next &raquo;"
+                                    ? "»"
+                                    : link.label === "&laquo; Previous"
+                                    ? "«"
+                                    : link.label}
                             </Link>
                         </li>
                     );

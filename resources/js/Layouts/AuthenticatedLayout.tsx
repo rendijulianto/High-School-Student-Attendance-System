@@ -5,7 +5,7 @@ import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";
-import { FaChalkboardTeacher } from "react-icons/fa";
+import { FaChalkboardTeacher, FaUserGraduate } from "react-icons/fa";
 
 export default function Authenticated({
     user,
@@ -44,10 +44,10 @@ export default function Authenticated({
                                     </span>
                                 </NavLink>
                                 <NavLink
-                                    href={route("posts.index")}
-                                    active={route().current("posts.*")}
+                                    href={route("students.index")}
+                                    active={route().current("students.*")}
                                 >
-                                    Siswa
+                                    Siswa <FaUserGraduate className="ml-2" />
                                 </NavLink>
                                 <NavLink
                                     href={route("posts.index")}

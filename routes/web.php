@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\PostController;
 use Illuminate\Foundation\Application;
@@ -39,6 +40,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/teachers/import', [TeacherController::class, 'import'])->name('teachers.import');
     Route::post('/teachers/import', [TeacherController::class, 'importStore'])->name('teachers.importStore');
     Route::resource('teachers', TeacherController::class)->names('teachers');
+    // students
+    Route::get('/students/import', [StudentController::class, 'import'])->name('students.import');
+    Route::post('/students/import', [StudentController::class, 'importStore'])->name('students.importStore');
+    Route::resource('students', StudentController::class)->names('students');
+
 });
 
 
