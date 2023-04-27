@@ -3,6 +3,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { PageProps } from "@/types";
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link, useForm } from "@inertiajs/react";
+import { useEffect, useState } from "react";
 import {
     FaPlusCircle,
     FaRegFileExcel,
@@ -18,14 +19,16 @@ export default function Teacher(
         modalImport: false,
     });
 
-    function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    const [query, setQuery] = useState("");
+
+    function handleSearch() {
         Inertia.get(
             route("teacher.index", {
-                search: e.target.value,
+                search: "search",
             }),
             {
                 preserveState: true,
-                preserveScroll: true,
+                replace: true,
             }
         );
     }
@@ -87,7 +90,7 @@ export default function Teacher(
                                             <FaDownload className="text-white ml-1" />
                                         </Link>
                                     </div>
-                                    <form onSubmit={handleSearch}>
+                                    <form>
                                         <label className="sr-only">
                                             Search
                                         </label>
@@ -112,15 +115,16 @@ export default function Teacher(
                                                 id="table-search-users"
                                                 className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="Search for users"
-                                                value={data.search}
+                                                autoComplete="off"
+                                                value={query}
                                                 onChange={(e) =>
-                                                    setData(
-                                                        "search",
-                                                        e.target.value
-                                                    )
+                                                    setQuery(e.target.value)
                                                 }
                                             />
                                         </div>
+                                        <button onClick={handleSearch}>
+                                            Cari
+                                        </button>
                                     </form>
                                 </div>
                                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -254,4 +258,7 @@ export default function Teacher(
             </AuthenticatedLayout>
         </>
     );
+}
+function debounce(arg0: () => void, arg1: number) {
+    throw new Error("Function not implemented.");
 }
