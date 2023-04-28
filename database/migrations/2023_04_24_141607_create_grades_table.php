@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
             $table->string('level', 3);
-            $table->enum('manjor', ['IPA', 'IPS']);
+            $table->enum('major', ['IPA', 'IPS']);
             $table->string('class',20);
-            $table->string('shcool_year', 9);
+            $table->string('school_year', 9);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

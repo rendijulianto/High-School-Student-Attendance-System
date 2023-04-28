@@ -1,16 +1,16 @@
-import { useState, PropsWithChildren, ReactNode } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-import { Link } from "@inertiajs/react";
 import { User } from "@/types";
+import { Link } from "@inertiajs/react";
+import { PropsWithChildren, ReactNode, useState } from "react";
 import {
+    FaBook,
     FaChalkboardTeacher,
-    FaUserGraduate,
     FaHome,
     FaObjectGroup,
-    FaBook,
+    FaUserGraduate,
 } from "react-icons/fa";
 
 export default function Authenticated({
@@ -59,8 +59,8 @@ export default function Authenticated({
                                     Siswa <FaUserGraduate className="ml-2" />
                                 </NavLink>
                                 <NavLink
-                                    href={route("teachers.index")}
-                                    active={route().current("teachers.*")}
+                                    href={route("grades.index")}
+                                    active={route().current("grades.*")}
                                 >
                                     Kelas <FaObjectGroup className="ml-2" />
                                 </NavLink>

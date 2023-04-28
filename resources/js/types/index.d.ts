@@ -5,6 +5,14 @@ export interface User {
     email_verified_at: string;
 }
 
+export interface Grade {
+    id: number;
+    level: string;
+    major: string;
+    class: string;
+    school_year: string;
+}
+
 export interface Teacher {
     id: number;
     name: string;
@@ -83,11 +91,21 @@ export type PageProps<
               search: string | null;
           }
         | any;
+    grades: {
+        data: Grade[];
+        links: PaginationLink[];
+        total: number;
+        from: number;
+        to: number;
+        search: string | null;
+    };
+
     search: string | null;
     teacher: Teacher;
     teach: Teach;
     student: Student;
     subject: Subject;
+    grade: Grade;
     teacher_id: number;
     flash: {
         message: string | null;
