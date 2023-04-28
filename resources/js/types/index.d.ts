@@ -23,23 +23,23 @@ export interface Student {
     gender: string;
 }
 
-export interface Post {
+export interface Teach {
     id: number;
-    title: string;
-    description: string;
+    teacher_id: number;
+    subject_id: number;
+    teacher: Teacher;
+    subject: Subject;
+}
+
+export interface Subject {
+    id: number;
+    name: string;
 }
 
 interface PaginationLink {
     url: string | null;
     label: string;
     active: boolean;
-}
-
-interface PaginationMeta {
-    perPage: number;
-    lastPage: number;
-    currentPage: number;
-    total: number;
 }
 
 export type PageProps<
@@ -55,7 +55,15 @@ export type PageProps<
         from: number;
         to: number;
         search: string | null;
-        pagination: PaginationMeta;
+        Teacher: Teacher | null;
+    };
+    teaches: {
+        data: Teach[];
+        links: PaginationLink[];
+        total: number;
+        from: number;
+        to: number;
+        search: string | null;
     };
     students: {
         data: Student[];
@@ -64,18 +72,23 @@ export type PageProps<
         from: number;
         to: number;
         search: string | null;
-        pagination: PaginationMeta;
     };
-
-    posts: {
-        data: Post[];
-        links: PaginationLink[];
-        search: string | null;
-    };
+    subjects:
+        | {
+              data: Subject[];
+              links: PaginationLink[];
+              total: number;
+              from: number;
+              to: number;
+              search: string | null;
+          }
+        | any;
     search: string | null;
-    post: Post;
     teacher: Teacher;
+    teach: Teach;
     student: Student;
+    subject: Subject;
+    teacher_id: number;
     flash: {
         message: string | null;
         success: string | null;
@@ -83,10 +96,4 @@ export type PageProps<
         warning: string | null;
         error: string | null;
     };
-    perPage: number;
-    lastPage: number;
-    currentPage: number;
-    totalData: number;
-    params: any;
-    links: PaginationLink[];
 };

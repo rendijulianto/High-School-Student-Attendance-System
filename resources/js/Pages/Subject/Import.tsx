@@ -9,7 +9,7 @@ const Create = ({ auth }: PageProps) => {
 
     function handleSubmit(e: any) {
         e.preventDefault();
-        post(route("students.import"));
+        post(route("subjects.import"));
     }
 
     function handleFile(e: any) {
@@ -21,7 +21,7 @@ const Create = ({ auth }: PageProps) => {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    Import Siswa Baru dari Excel
+                    Import Mata Pelajaran Baru dari Excel
                 </h2>
             }
         >
@@ -31,10 +31,10 @@ const Create = ({ auth }: PageProps) => {
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200 flex items-center space-x-2">
-                                Import Siswa Baru <FaUserGraduate />
+                                Import Mata Pelajaran Baru <FaUserGraduate />
                             </h3>
                             <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400 mb-5">
-                                Isi form berikut untuk menambahkan siswa baru ke
+                                Isi form berikut untuk menambahkan mata pelajaran baru ke
                                 dalam sistem.
                             </p>
                             <form

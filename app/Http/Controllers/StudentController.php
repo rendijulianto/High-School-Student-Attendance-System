@@ -66,8 +66,8 @@ class StudentController extends Controller
     {
         DB::beginTransaction();
         try {
-         
-            
+
+
             $student = Student::create(
               [
                 'name' => $request->first_name . ' ' . $request->last_name,
@@ -76,7 +76,7 @@ class StudentController extends Controller
                 'gender' => $request->gender,
               ]
             );
-      
+
 
             // dispatch(new \App\Jobs\SendEmailRegisterStudentQueueJob($student->id, $password));
             DB::commit();

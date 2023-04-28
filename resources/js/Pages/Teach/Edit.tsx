@@ -2,24 +2,24 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { Inertia } from "@inertiajs/inertia";
 import { PageProps } from "@/types";
-const Edit = ({ auth, student }: PageProps) => {
+const Edit = ({ auth, teacher }: PageProps) => {
     const { data, setData, errors, put } = useForm({
         // first name didapat dari name yang dipecah berdasarkan spasi
-        first_name: student.name.split(" ")[0] || "",
-        last_name: student.name.split(" ")[1] || "",
-        email: student.email || "",
-        gender: student.gender || "",
-        nis: student.nis || "",
+        first_name: teacher.name.split(" ")[0] || "",
+        last_name: teacher.name.split(" ")[1] || "",
+        email: teacher.email || "",
+        gender: teacher.gender || "",
+        nip: teacher.nip || "",
     });
 
     function handleSubmit(e: any) {
         e.preventDefault();
-        put(route("students.update", student.id));
+        put(route("teachers.update", teacher.id));
     }
 
     const handleDelete = async () => {
         if (confirm("Apakah anda yakin ingin menghapus data ini?")) {
-            Inertia.delete(route("students.destroy", student.id));
+            Inertia.delete(route("teachers.destroy", teacher.id));
         }
     };
 
@@ -28,7 +28,7 @@ const Edit = ({ auth, student }: PageProps) => {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    Ubah Data Siswa
+                    Ubah Data Guru
                 </h2>
             }
         >
@@ -38,10 +38,10 @@ const Edit = ({ auth, student }: PageProps) => {
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200">
-                                Ubah Data Siswa
+                                Ubah Data Guru
                             </h3>
                             <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400 mb-5">
-                                Ubah data siswa sesuai dengan data yang benar.
+                                Ubah data guru sesuai dengan data yang benar.
                             </p>
                             <form onSubmit={handleSubmit}>
                                 <div className="relative z-0 w-full mb-6 group">
@@ -127,23 +127,23 @@ const Edit = ({ auth, student }: PageProps) => {
                                     <div className="relative z-0 w-full mb-6 group">
                                         <input
                                             type="number"
-                                            name="nis"
-                                            id="nis"
+                                            name="nip"
+                                            id="nip"
                                             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             placeholder=" "
-                                            value={data.nis}
+                                            value={data.nip}
                                             onChange={(e) =>
-                                                setData("nis", e.target.value)
+                                                setData("nip", e.target.value)
                                             }
                                         />
                                         <label
-                                            htmlFor="nis"
+                                            htmlFor="nip"
                                             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                                         >
-                                            Nomor Induk Siswa
+                                            NIP (Optional)
                                         </label>
                                         <span className="text-red-600">
-                                            {errors.nis}
+                                            {errors.nip}
                                         </span>
                                     </div>
                                     <div className="relative z-0 w-full mb-6 group">

@@ -79,7 +79,7 @@ class TeacherController extends Controller
                 'gender' => $request->gender,
               ]
             );
-      
+
 
             dispatch(new \App\Jobs\SendEmailRegisterTeacherQueueJob($teacher->id, $password));
             DB::commit();

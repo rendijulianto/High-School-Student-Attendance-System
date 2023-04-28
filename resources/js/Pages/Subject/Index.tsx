@@ -6,7 +6,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 import { FaDownload, FaPlusCircle, FaRegFileExcel } from "react-icons/fa";
 export default function Teacher(
-    { auth, students, flash, search }: PageProps,
+    { auth, subjects, flash, search }: PageProps,
     props: any
 ) {
     const { data, setData, get } = useForm({
@@ -16,7 +16,7 @@ export default function Teacher(
 
     useEffect(() => {
         if (data.search) {
-            get(route("students.index"), {
+            get(route("subjects.index"), {
                 preserveState: true,
                 replace: true,
                 preserveScroll: true,
@@ -33,11 +33,11 @@ export default function Teacher(
                 user={auth.user}
                 header={
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                        Daftar Siswa
+                        Daftar Mata Pelajaran
                     </h2>
                 }
             >
-                <Head title="Daftar Siswa" />
+                <Head title="Daftar Mata Pelajaran" />
                 <div className="py-12">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         {flash.message && (
@@ -61,7 +61,7 @@ export default function Teacher(
                                     {/* Jika ada props message */}
                                     <div className="flex items-center space-x-4">
                                         <Link
-                                            href={route("students.create")}
+                                            href={route("subjects.create")}
                                             className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center space-x-2"
                                         >
                                             Tambah
@@ -69,7 +69,7 @@ export default function Teacher(
                                         </Link>
 
                                         <Link
-                                            href={route("students.import")}
+                                            href={route("subjects.import")}
                                             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center space-x-2"
                                         >
                                             Import
@@ -77,7 +77,7 @@ export default function Teacher(
                                         </Link>
 
                                         <Link
-                                            href={route("students.create")}
+                                            href={route("subjects.create")}
                                             className=" bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex items-center space-x-2"
                                         >
                                             Contoh{" "}
@@ -108,7 +108,7 @@ export default function Teacher(
                                                 type="text"
                                                 id="table-search-users"
                                                 className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Cari siswa..."
+                                                placeholder="Cari mata pelajaran..."
                                                 autoComplete="off"
                                                 value={data.search}
                                                 onChange={(e) =>
@@ -130,18 +130,7 @@ export default function Teacher(
                                             >
                                                 Name
                                             </th>
-                                            <th
-                                                scope="col"
-                                                className="px-6 py-3"
-                                            >
-                                                Email
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-6 py-3"
-                                            >
-                                                Jenis Kelamin
-                                            </th>
+
                                             <th
                                                 scope="col"
                                                 className="px-6 py-3"
@@ -151,10 +140,10 @@ export default function Teacher(
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {students.data.map((student: any) => (
+                                        {subjects.data.map((subject: any) => (
                                             <tr
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                                                key={student.id}
+                                                key={subject.id}
                                             >
                                                 <th
                                                     scope="row"
@@ -162,33 +151,23 @@ export default function Teacher(
                                                 >
                                                     <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
                                                         <span className="font-medium text-gray-600 dark:text-gray-300">
-                                                            {student.name[0].toUpperCase()}
+                                                            {subject.name[0].toUpperCase()}
                                                         </span>
                                                     </div>
                                                     <div className="pl-3">
                                                         <div className="text-base font-semibold">
-                                                            {student.name}
-                                                        </div>
-                                                        <div className="font-normal text-gray-500">
-                                                            {student.nis}
+                                                            {subject.name}
                                                         </div>
                                                     </div>
                                                 </th>
-                                                <td className="px-6 py-4">
-                                                    {student.email}
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    {student.gender === "L"
-                                                        ? "Laki-laki"
-                                                        : "Perempuan"}
-                                                </td>
+
                                                 <td className="px-6 py-4">
                                                     <Link
                                                         href={route(
-                                                            "students.edit",
+                                                            "subjects.edit",
                                                             {
-                                                                student:
-                                                                    student.id,
+                                                                subject:
+                                                                    subject.id,
                                                             }
                                                         )}
                                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:text-blue-800 dark:hover:text-blue-400 transition-colors duration-200 flex items-center space-x-2"
@@ -198,7 +177,7 @@ export default function Teacher(
                                                 </td>
                                             </tr>
                                         ))}
-                                        {students.data.length === 0 && (
+                                        {subjects.data.length === 0 && (
                                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                 <td
                                                     className="w-4 p-4"
@@ -218,10 +197,10 @@ export default function Teacher(
                                     </tbody>
                                 </table>
                                 <Pagination
-                                    links={students.links}
-                                    total={students.total}
-                                    to={students.to}
-                                    from={students.from}
+                                    links={subjects.links}
+                                    total={subjects.total}
+                                    to={subjects.to}
+                                    from={subjects.from}
                                 />
                             </div>
                         </div>

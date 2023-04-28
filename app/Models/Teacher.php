@@ -16,5 +16,10 @@ class Teacher extends Model
         'nip',
         'gender',
     ];
-  
+
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'teaches');
+    }
 }

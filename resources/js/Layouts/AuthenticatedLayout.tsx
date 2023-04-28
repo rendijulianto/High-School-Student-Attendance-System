@@ -5,7 +5,13 @@ import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import { User } from "@/types";
-import { FaChalkboardTeacher, FaUserGraduate } from "react-icons/fa";
+import {
+    FaChalkboardTeacher,
+    FaUserGraduate,
+    FaHome,
+    FaObjectGroup,
+    FaBook,
+} from "react-icons/fa";
 
 export default function Authenticated({
     user,
@@ -32,11 +38,14 @@ export default function Authenticated({
                                     href={route("dashboard")}
                                     active={route().current("dashboard")}
                                 >
-                                    Dashboard <i className="fas fa-home"></i>
+                                    Dashboard <FaHome className="ml-2" />
                                 </NavLink>
                                 <NavLink
                                     href={route("teachers.index")}
-                                    active={route().current("teachers.*")}
+                                    active={
+                                        route().current("teachers.*") ||
+                                        route().current("teaches.*")
+                                    }
                                 >
                                     <span className="flex items-center">
                                         Guru
@@ -50,32 +59,32 @@ export default function Authenticated({
                                     Siswa <FaUserGraduate className="ml-2" />
                                 </NavLink>
                                 <NavLink
-                                    href={route("posts.index")}
-                                    active={route().current("posts.*")}
+                                    href={route("teachers.index")}
+                                    active={route().current("teachers.*")}
                                 >
-                                    Kelas
+                                    Kelas <FaObjectGroup className="ml-2" />
                                 </NavLink>
                                 <NavLink
-                                    href={route("posts.index")}
-                                    active={route().current("posts.*")}
+                                    href={route("subjects.index")}
+                                    active={route().current("subjects.*")}
                                 >
-                                    Mata Pelajaran
+                                    Mata Pelajaran <FaBook className="ml-2" />
                                 </NavLink>
                                 <NavLink
-                                    href={route("posts.index")}
-                                    active={route().current("posts.*")}
+                                    href={route("teachers.index")}
+                                    active={route().current("teachers.*")}
                                 >
                                     Jadwal
                                 </NavLink>
                                 <NavLink
-                                    href={route("posts.index")}
-                                    active={route().current("posts.*")}
+                                    href={route("teachers.index")}
+                                    active={route().current("teachers.*")}
                                 >
                                     Laporan
                                 </NavLink>
                                 <NavLink
-                                    href={route("posts.index")}
-                                    active={route().current("posts.*")}
+                                    href={route("teachers.index")}
+                                    active={route().current("teachers.*")}
                                 >
                                     Posts
                                 </NavLink>

@@ -15,14 +15,16 @@ export default function Teacher(
     });
 
     useEffect(() => {
-        get(route("teachers.index"), {
-            preserveState: true,
-            replace: true,
-            preserveScroll: true,
-            onSuccess: (page) => {
-                console.log(page);
-            },
-        });
+        if (data.search) {
+            get(route("teachers.index"), {
+                preserveState: true,
+                replace: true,
+                preserveScroll: true,
+                onSuccess: (page) => {
+                    console.log(page);
+                },
+            });
+        }
     }, [data.search]);
 
     return (
@@ -192,6 +194,18 @@ export default function Teacher(
                                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:text-blue-800 dark:hover:text-blue-400 transition-colors duration-200 flex items-center space-x-2"
                                                     >
                                                         Ubah
+                                                    </Link>
+                                                    <Link
+                                                        href={route(
+                                                            "teaches.index",
+                                                            {
+                                                                teacher:
+                                                                    teacher.id,
+                                                            }
+                                                        )}
+                                                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:text-blue-800 dark:hover:text-blue-400 transition-colors duration-200 flex items-center space-x-2"
+                                                    >
+                                                        Kelola Mengajar
                                                     </Link>
                                                 </td>
                                             </tr>
