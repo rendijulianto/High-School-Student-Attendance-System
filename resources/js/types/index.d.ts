@@ -110,14 +110,16 @@ export type PageProps<
               search: string | null;
           }
         | any;
-    grades: {
-        data: Grade[];
-        links: PaginationLink[];
-        total: number;
-        from: number;
-        to: number;
-        search: string | null;
-    };
+    grades:
+        | {
+              data: Grade[];
+              links: PaginationLink[];
+              total: number;
+              from: number;
+              to: number;
+              search: string | null;
+          }
+        | any;
     gradeStudents: {
         data: GradeStudent[];
         links: PaginationLink[];

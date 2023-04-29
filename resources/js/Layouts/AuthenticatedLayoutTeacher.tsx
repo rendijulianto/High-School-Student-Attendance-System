@@ -1,12 +1,20 @@
-import { useState, PropsWithChildren, ReactNode } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-import { Link } from "@inertiajs/react";
 import { User } from "@/types";
+import { Link } from "@inertiajs/react";
+import { PropsWithChildren, ReactNode, useState } from "react";
+import {
+    FaBook,
+    FaChalkboardTeacher,
+    FaHome,
+    FaObjectGroup,
+    FaUserGraduate,
+    FaChartBar,
+} from "react-icons/fa";
 
-export default function Authenticated({
+export default function AuthenticatedLayoutTeacher({
     user,
     header,
     children,
@@ -25,19 +33,20 @@ export default function Authenticated({
                                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                                 </Link>
                             </div>
-
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink
-                                    href={route("dashboard")}
-                                    active={route().current("dashboard")}
+                                    href={route("dashboard.teacher")}
+                                    active={route().current(
+                                        "dashboard.teacher"
+                                    )}
                                 >
-                                    Dashboard
+                                    Dashboard <FaHome className="ml-2" />
                                 </NavLink>
                                 <NavLink
-                                    href={route("posts.index")}
-                                    active={route().current("posts.*")}
+                                    href={route("presences.index")}
+                                    active={route().current("presences.*")}
                                 >
-                                    Posts
+                                    Kehadiran <FaBook className="ml-2" />
                                 </NavLink>
                             </div>
                         </div>

@@ -25,4 +25,10 @@ class Teach extends Model
         return $this->belongsTo(Subject::class);
     }
 
+    // schedules
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
 }

@@ -10,6 +10,8 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\GradeStudentController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PresenceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,6 +35,9 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/login/teacher', [LoginController::class, 'index'])->name('login.teacher');
+Route::post('/login/teacher', [LoginController::class, 'isLogin'])->name('isLogin.teacher');
 
 
 Route::middleware('auth')->group(function () {
@@ -81,6 +86,17 @@ Route::middleware('auth')->group(function () {
 
     // ajax
     Route::get('/ajax/teach/{subject_id}', [AjaxController::class, 'teach'])->name('ajax.teach');
+});
+
+Route::middleware(['auth:teacher'])->group(function () {
+    Route::get('/dashboard/teacher', [DashboardController::class, 'teacher'])->name('dashboard.teacher');
+    // presences
+    Route::resource('presences', PresenceController::class)->names('presences');
+    // profile
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
 
 

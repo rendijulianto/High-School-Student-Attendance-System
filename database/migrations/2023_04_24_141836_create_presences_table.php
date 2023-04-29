@@ -13,12 +13,9 @@ return new class extends Migration
     {
         Schema::create('presences', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('schedule_id');
-            $table->enum('presence', ['Present', 'Sick','Permit', 'Alpha']);
-            $table->date('date');
+            $table->string('material');
             $table->timestamps();
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade')->onUpdate('cascade');
         });
     }
