@@ -1,5 +1,6 @@
 <?php
-
+// DashboardController
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\TeachController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\GradeStudentController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\AjaxController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,11 +34,10 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    // dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -79,7 +80,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy'])->name('schedules.destroy');
 
     // ajax
-    Route::post('/ajax/teach', [AjaxController::class, 'teach'])->name('ajax.teach');
+    Route::get('/ajax/teach/{subject_id}', [AjaxController::class, 'teach'])->name('ajax.teach');
 });
 
 

@@ -11,7 +11,7 @@ class StoreScheduleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,24 @@ class StoreScheduleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'schedules' => 'required|array',
+            'schedules.*.subject_id' => 'required|exists:subjects,id',
+            'schedules.*.teacher_id' => 'required|exists:teachers,id',
+        ];
+    }
+
+
+    /**
+     * Get the error messages for the defined validation rules.
+     */
+    public function messages(): array
+    {
+        return [
+            'schedules.required' => 'Jadwal tidak boleh kosong',
+            'schedules.*.subject_id.required' => 'Mata pelajaran tidak boleh kosong',
+            'schedules.*.subject_id.exists' => 'Mata pelajaran tidak ditemukan',
+            'schedules.*.teacher_id.required' => 'Guru tidak boleh kosong',
+            'schedules.*.teacher_id.exists' => 'Guru tidak ditemukan',
         ];
     }
 }

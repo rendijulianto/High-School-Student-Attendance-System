@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Grade, Student, Schedule};
+use App\Models\{Grade, Student, Schedule,Subject,Teach};
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreScheduleRequest;
@@ -17,14 +17,15 @@ class ScheduleController extends Controller
     public function index($grade_id, Request $request)
     {
         $grade = Grade::findOrFail($grade_id);
-
+    
         $search = $request->get('search') ?? '';
 
-        $schedules = $grade->schedules()->latest()->where('teach_id', 'like', '%' . $search . '%')->orWhere('grade_id', 'like', '%' . $search . '%')->where('grade_id', $grade_id)->with('teacher', 'grade')->whereHas('teacher', function ($query) use ($search) {
-            $query->where('name', 'like', '%' . $search . '%');
-        })->orWhereHas('grade', function ($query) use ($search) {
+        $schedules = $grade->schedules()->latest()->where('teach_id', 'like', '%' . $search . '%')->orWhere('grade_id', 'like', '%' . $search . '%')->where('grade_id', $grade_id)->with('teach.teacher','teach.subject', 'grade')->WhereHas('grade', function ($query) use ($search) {
             $query->where('class', 'like', '%' . $search . '%');
         })->paginate(10)->withQueryString();
+
+
+        // dd($schedules->toArray());
 
         return Inertia::render('Schedule/Index', ['schedules' => $schedules, 'search' => $search, 'url' => $request->url(), 'grade_id' => $grade_id, 'grade' => $grade]);
     }
@@ -34,10 +35,8 @@ class ScheduleController extends Controller
      */
     public function create($grade_id)
     {
-        $students = Student::whereDoesntHave('grades', function ($query) use ($grade_id) {
-            $query->where('grade_id', $grade_id);
-        })->orderBy('name')->get();
-        return Inertia::render('Schedule/Create', ['students' => $students, 'grade_id' => $grade_id]);
+        $subjects = Subject::orderBy('name')->with('teachers')->get();
+        return Inertia::render('Schedule/Create', ['subjects' => $subjects, 'grade_id' => $grade_id]);
     }
 
 
@@ -49,12 +48,20 @@ class ScheduleController extends Controller
         DB::beginTransaction();
         try {
             $grade = Grade::findOrFail($grade_id);
-            // $grade->students tambahkan yang lama jangan dihapus
-            foreach ($request->student_id as $student_id) {
-                $schedule = new Schedule();
-                $schedule->grade_id = $grade_id;
-                $schedule->student_id = $student_id;
-                $schedule->save();
+            $schedules = $request->input('schedules');
+            foreach ($schedules as $schedule) {
+               $subject_id = $schedule['subject_id'];
+                $teacher_id = $schedule['teacher_id'];
+                $teach = Teach::where('subject_id', $subject_id)->where('teacher_id', $teacher_id)->first();
+                if (!$teach) {
+                    $teach = Teach::create([
+                        'subject_id' => $subject_id,
+                        'teacher_id' => $teacher_id,
+                    ]);
+                }
+                $grade->schedules()->create([
+                    'teach_id' => $teach->id,
+                ]);
             }
             DB::commit();
             return Redirect::route('schedules.index', [

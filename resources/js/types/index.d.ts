@@ -42,6 +42,7 @@ export interface Teach {
 export interface Subject {
     id: number;
     name: string;
+    teachers: Teacher[] | null;
 }
 
 export interface GradeStudent {
@@ -50,6 +51,14 @@ export interface GradeStudent {
     student_id: number;
     grade: Grade;
     student: Student;
+}
+
+export interface Schedule {
+    id: number;
+    grade_id: number;
+    teach_id: number;
+    grade: Grade;
+    teach: Teach;
 }
 
 interface PaginationLink {
@@ -117,6 +126,14 @@ export type PageProps<
         to: number;
         search: string | null;
     };
+    schedules: {
+        data: Schedule[];
+        links: PaginationLink[];
+        total: number;
+        from: number;
+        to: number;
+        search: string | null;
+    };
 
     search: string | null;
     teacher: Teacher;
@@ -125,9 +142,17 @@ export type PageProps<
     subject: Subject;
     grade: Grade;
     gradeStudent: GradeStudent;
+    schedule: Schedule;
     teacher_id: number;
     subject_id: number;
     grade_id: number;
+    student_id: number;
+    schedule_id: number;
+    total_teacher: number;
+    total_teach: number;
+    total_student: number;
+    total_subject: number;
+    total_grade: number;
     flash: {
         message: string | null;
         success: string | null;

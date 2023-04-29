@@ -20,11 +20,10 @@ class TeachController extends Controller
         $teacher = Teacher::findOrFail($teacher_id);
 
         $search = $request->get('search') ?? '';
-        $teaches = Teach::latest()->where('teacher_id', 'like', '%' . $search . '%')->orWhere('subject_id', 'like', '%' . $search . '%')->where('teacher_id', $teacher_id)->with('subject', 'teacher')->whereHas('subject', function ($query) use ($search) {
-            $query->where('name', 'like', '%' . $search . '%');
-        })->orWhereHas('teacher', function ($query) use ($search) {
+        $teaches = Teach::latest()->where('teacher_id', $teacher_id)->with('subject', 'teacher')->whereHas('subject', function ($query) use ($search) {
             $query->where('name', 'like', '%' . $search . '%');
         })->paginate(10)->withQueryString();
+      
         return Inertia::render('Teach/Index', ['teaches' => $teaches, 'search' => $search, 'url' => $request->url(), 'teacher_id' => $teacher_id, 'teacher' => $teacher]);
     }
 

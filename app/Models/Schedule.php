@@ -14,9 +14,9 @@ class Schedule extends Model
         'grade_id',
     ];
 
-    public function teacher()
+    public function teach()
     {
-        return $this->belongsTo(Teacher::class, 'teach_id');
+        return $this->belongsTo(Teach::class);
     }
 
     public function grade()

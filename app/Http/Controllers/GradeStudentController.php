@@ -16,6 +16,7 @@ class GradeStudentController extends Controller
      */
     public function index($grade_id, Request $request)
     {
+    
         $grade = Grade::findOrFail($grade_id);
 
         $search = $request->get('search') ?? '';
