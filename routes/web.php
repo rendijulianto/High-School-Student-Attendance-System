@@ -91,6 +91,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth:teacher'])->group(function () {
     Route::get('/dashboard/teacher', [DashboardController::class, 'teacher'])->name('dashboard.teacher');
     // presences
+    Route::get('/presences/{schedule}/view', [PresenceController::class, 'view'])->name('presences.view');
     Route::resource('presences', PresenceController::class)->names('presences');
     // profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

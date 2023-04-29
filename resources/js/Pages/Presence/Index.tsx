@@ -136,7 +136,7 @@ export default function Presence(
                                                 scope="col"
                                                 className="px-6 py-3"
                                             >
-                                                Tahun Ajaran
+                                                Mata Pelajaran
                                             </th>
                                             <th
                                                 scope="col"
@@ -150,7 +150,7 @@ export default function Presence(
                                         {grades.map((grade: any) => (
                                             <tr
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                                                key={grade.id}
+                                                key={grade.schedule_id}
                                             >
                                                 <th
                                                     scope="row"
@@ -163,7 +163,7 @@ export default function Presence(
                                                     </div>
                                                     <div className="pl-3">
                                                         <div className="text-base font-semibold">
-                                                            {grade.grade} -
+                                                            {grade.grade}
                                                         </div>
                                                     </div>
                                                 </th>
@@ -173,36 +173,15 @@ export default function Presence(
                                                 <td className="px-6 py-4">
                                                     <Link
                                                         href={route(
-                                                            "grades.edit",
+                                                            "presences.view",
                                                             {
-                                                                grade: grade.id,
+                                                                schedule:
+                                                                    grade.schedule_id,
                                                             }
                                                         )}
                                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:text-blue-800 dark:hover:text-blue-400 transition-colors duration-200 flex items-center space-x-2"
                                                     >
-                                                        Ubah
-                                                    </Link>
-                                                    <Link
-                                                        href={route(
-                                                            "gradeStudents.index",
-                                                            {
-                                                                grade: grade.id,
-                                                            }
-                                                        )}
-                                                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:text-blue-800 dark:hover:text-blue-400 transition-colors duration-200 flex items-center space-x-2"
-                                                    >
-                                                        Kelola Siswa
-                                                    </Link>
-                                                    <Link
-                                                        href={route(
-                                                            "schedules.index",
-                                                            {
-                                                                grade: grade.id,
-                                                            }
-                                                        )}
-                                                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:text-blue-800 dark:hover:text-blue-400 transition-colors duration-200 flex items-center space-x-2"
-                                                    >
-                                                        Kelola Jadwal
+                                                        Kelola Kehadiran
                                                     </Link>
                                                 </td>
                                             </tr>

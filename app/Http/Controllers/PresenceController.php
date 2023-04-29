@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{PresenceDetail, Presence,  Grade, Student};
+use App\Models\{PresenceDetail, Presence,  Grade, Student, Schedule};
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -18,13 +18,19 @@ class PresenceController extends Controller
         $grades = Auth::user()->teaches()->with('schedules')->get()->map(function ($teach) {
             return $teach->schedules->map(function ($schedule) {
                 return (object) [
-                    'id' => $schedule->id,
-                    'grade' => $schedule->grade->level . ' ' . $schedule->grade->major . ' ' . $schedule->grade->class,
+                    'schedule_id' => $schedule->id,
+                    'grade' => $schedule->grade->level . ' ' . $schedule->grade->major . ' ' . $schedule->grade->class . ' ' . $schedule->grade->school_year,
                     'subject' => $schedule->teach->subject->name,
                 ];
             });
-        })->flatten()->unique('id')->values();
+        })->flatten()->unique('schedule_id')->values();
         return Inertia::render('Presence/Index', ['grades' => $grades,  'search' => $search, 'url' => $request->url()]);
+    }
+
+    public function view(Schedule $schedule)
+    {
+        dd($schedule);
+        return Inertia::render('Presence/View', ['schedule' => $schedule, 'students' => $students]);
     }
 
     /**
