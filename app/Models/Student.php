@@ -16,4 +16,9 @@ class Student extends Model
         'gender'
     ];
 
+
+    public function grades()
+    {
+        return $this->belongsToMany(Grade::class, 'grade_students');
+    }
 }

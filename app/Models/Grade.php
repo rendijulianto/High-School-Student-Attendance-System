@@ -21,4 +21,10 @@ class Grade extends Model
     {
         return $this->hasMany(GradeStudent::class);
     }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
 }

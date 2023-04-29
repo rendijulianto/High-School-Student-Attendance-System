@@ -7,6 +7,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeachController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\GradeStudentController;
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -63,13 +64,22 @@ Route::middleware('auth')->group(function () {
     Route::post('/grades/import', [GradeController::class, 'importStore'])->name('grades.importStore');
     Route::resource('grades', GradeController::class)->names('grades');
     // grade students
-    Route::get('/grade-students/{grade}/import', [GradeStudentController::class, 'import'])->name('grade-students.import');
-    Route::post('/grade-students/{grade}/import', [GradeStudentController::class, 'importStore'])->name('grade-students.importStore');
-    Route::get('/grade-students/{grade}', [GradeStudentController::class, 'index'])->name('grade-students.index');
-    Route::get('/grade-students/{grade}/create', [GradeStudentController::class, 'create'])->name('grade-students.create');
-    Route::post('/grade-students/{grade}', [GradeStudentController::class, 'store'])->name('grade-students.store');
-    Route::delete('/grade-students/{gradeStudent}', [GradeStudentController::class, 'destroy'])->name('grade-students.destroy');
-    
+    Route::get('/gradeStudents/{grade}/import', [GradeStudentController::class, 'import'])->name('gradeStudents.import');
+    Route::post('/gradeStudents/{grade}/import', [GradeStudentController::class, 'importStore'])->name('gradeStudents.importStore');
+    Route::get('/gradeStudents/{grade}', [GradeStudentController::class, 'index'])->name('gradeStudents.index');
+    Route::get('/gradeStudents/{grade}/create', [GradeStudentController::class, 'create'])->name('gradeStudents.create');
+    Route::post('/gradeStudents/{grade}', [GradeStudentController::class, 'store'])->name('gradeStudents.store');
+    Route::delete('/gradeStudents/{gradeStudent}', [GradeStudentController::class, 'destroy'])->name('gradeStudents.destroy');
+    // schedules
+    Route::get('/schedules/{grade}/import', [ScheduleController::class, 'import'])->name('schedules.import');
+    Route::post('/schedules/{grade}/import', [ScheduleController::class, 'importStore'])->name('schedules.importStore');
+    Route::get('/schedules/{grade}', [ScheduleController::class, 'index'])->name('schedules.index');
+    Route::get('/schedules/{grade}/create', [ScheduleController::class, 'create'])->name('schedules.create');
+    Route::post('/schedules/{grade}', [ScheduleController::class, 'store'])->name('schedules.store');
+    Route::delete('/schedules/{schedule}', [ScheduleController::class, 'destroy'])->name('schedules.destroy');
+
+    // ajax
+    Route::post('/ajax/teach', [AjaxController::class, 'teach'])->name('ajax.teach');
 });
 
 

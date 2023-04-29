@@ -11,6 +11,7 @@ import {
     FaHome,
     FaObjectGroup,
     FaUserGraduate,
+    FaChartBar,
 } from "react-icons/fa";
 
 export default function Authenticated({
@@ -60,7 +61,11 @@ export default function Authenticated({
                                 </NavLink>
                                 <NavLink
                                     href={route("grades.index")}
-                                    active={route().current("grades.*")}
+                                    active={
+                                        route().current("grades.*") ||
+                                        route().current("gradeStudents.*") ||
+                                        route().current("schedules.*")
+                                    }
                                 >
                                     Kelas <FaObjectGroup className="ml-2" />
                                 </NavLink>
@@ -74,19 +79,7 @@ export default function Authenticated({
                                     href={route("teachers.index")}
                                     active={route().current("teachers.*")}
                                 >
-                                    Jadwal
-                                </NavLink>
-                                <NavLink
-                                    href={route("teachers.index")}
-                                    active={route().current("teachers.*")}
-                                >
-                                    Laporan
-                                </NavLink>
-                                <NavLink
-                                    href={route("teachers.index")}
-                                    active={route().current("teachers.*")}
-                                >
-                                    Posts
+                                    Laporan <FaChartBar className="ml-2" />
                                 </NavLink>
                             </div>
                         </div>

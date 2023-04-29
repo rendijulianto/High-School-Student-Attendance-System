@@ -3,10 +3,16 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import getParameterByName from "@/Utils/getParameterByName";
 import { PageProps } from "@/types";
 import { Head, Link, useForm } from "@inertiajs/react";
+import { Inertia } from "@inertiajs/inertia";
 import { useEffect } from "react";
-import { FaDownload, FaPlusCircle, FaRegFileExcel } from "react-icons/fa";
-export default function Teacher(
-    { auth, grades, flash, search }: PageProps,
+import {
+    FaDownload,
+    FaPlusCircle,
+    FaRegFileExcel,
+    FaTrash,
+} from "react-icons/fa";
+export default function Teach(
+    { auth, gradeStudents, grade, flash, search, grade_id }: PageProps,
     props: any
 ) {
     const { data, setData, get } = useForm({
@@ -14,9 +20,19 @@ export default function Teacher(
         page: getParameterByName("page") || 1,
     });
 
+    const handleDelete = async (e: any, gradeStudent: number) => {
+        if (confirm("Apakah anda yakin ingin menghapus data ini?")) {
+            await Inertia.delete(
+                route("gradeStudents.destroy", {
+                    gradeStudent: gradeStudent,
+                })
+            );
+        }
+    };
+
     useEffect(() => {
         if (data.search) {
-            get(route("grades.index"), {
+            get(route("gradeStudents.index", { grade: grade_id }), {
                 preserveState: true,
                 replace: true,
                 preserveScroll: true,
@@ -33,11 +49,11 @@ export default function Teacher(
                 user={auth.user}
                 header={
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                        Daftar Kelas
+                        Daftar Siswa
                     </h2>
                 }
             >
-                <Head title="Daftar Kelas" />
+                <Head title="Daftar Siswa" />
                 <div className="py-12">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         {flash.message && (
@@ -61,7 +77,12 @@ export default function Teacher(
                                     {/* Jika ada props message */}
                                     <div className="flex items-center space-x-4">
                                         <Link
-                                            href={route("grades.create")}
+                                            href={route(
+                                                "gradeStudents.create",
+                                                {
+                                                    grade: grade_id,
+                                                }
+                                            )}
                                             className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center space-x-2"
                                         >
                                             Tambah
@@ -69,7 +90,12 @@ export default function Teacher(
                                         </Link>
 
                                         <Link
-                                            href={route("grades.import")}
+                                            href={route(
+                                                "gradeStudents.create",
+                                                {
+                                                    grade: grade_id,
+                                                }
+                                            )}
                                             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center space-x-2"
                                         >
                                             Import
@@ -77,13 +103,19 @@ export default function Teacher(
                                         </Link>
 
                                         <Link
-                                            href={route("grades.create")}
+                                            href={route(
+                                                "gradeStudents.create",
+                                                {
+                                                    grade: grade_id,
+                                                }
+                                            )}
                                             className=" bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex items-center space-x-2"
                                         >
                                             Contoh{" "}
                                             <FaDownload className="text-white ml-1" />
                                         </Link>
                                     </div>
+
                                     <form>
                                         <label className="sr-only">
                                             Search
@@ -108,7 +140,7 @@ export default function Teacher(
                                                 type="text"
                                                 id="table-search-users"
                                                 className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Cari siswa..."
+                                                placeholder="Cari nama siswa"
                                                 autoComplete="off"
                                                 value={data.search}
                                                 onChange={(e) =>
@@ -121,6 +153,15 @@ export default function Teacher(
                                         </div>
                                     </form>
                                 </div>
+                                <div className="overflow-x-auto w-full px-4">
+                                    <span>
+                                        <b>Nama Kelas :</b> {grade.level} -{" "}
+                                        {grade.major} - {grade.school_year}
+                                        <b>
+                                            Tahun Ajaran : {grade.school_year}{" "}
+                                        </b>
+                                    </span>
+                                </div>
                                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                         <tr>
@@ -128,14 +169,9 @@ export default function Teacher(
                                                 scope="col"
                                                 className="px-6 py-3"
                                             >
-                                                Nama Kelas
+                                                Name
                                             </th>
-                                            <th
-                                                scope="col"
-                                                className="px-6 py-3"
-                                            >
-                                                Tahun Ajaran
-                                            </th>
+
                                             <th
                                                 scope="col"
                                                 className="px-6 py-3"
@@ -145,72 +181,62 @@ export default function Teacher(
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {grades.data.map((grade: any) => (
-                                            <tr
-                                                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                                                key={grade.id}
-                                            >
-                                                <th
-                                                    scope="row"
-                                                    className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                                        {gradeStudents.data.map(
+                                            (gradeStudent: any) => (
+                                                <tr
+                                                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                                                    key={gradeStudent.id}
                                                 >
-                                                    <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                                                        <span className="font-medium text-gray-600 dark:text-gray-300">
-                                                            {grade.class}
-                                                        </span>
-                                                    </div>
-                                                    <div className="pl-3">
-                                                        <div className="text-base font-semibold">
-                                                            {grade.level} -{" "}
-                                                            {grade.major} -{" "}
-                                                            {grade.class}
+                                                    <th
+                                                        scope="row"
+                                                        className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                                                    >
+                                                        <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                                                            <span className="font-medium text-gray-600 dark:text-gray-300">
+                                                                {
+                                                                    gradeStudent
+                                                                        .student
+                                                                        .name[0]
+                                                                }
+                                                            </span>
                                                         </div>
-                                                        <div className="font-normal text-gray-500">
-                                                            {grade.school_year}
+                                                        <div className="pl-3">
+                                                            <div className="text-base font-semibold">
+                                                                {
+                                                                    gradeStudent
+                                                                        .student
+                                                                        .name
+                                                                }
+                                                            </div>
+                                                            <div className="text-xs text-gray-600 dark:text-gray-400">
+                                                                {
+                                                                    gradeStudent
+                                                                        .student
+                                                                        .nis
+                                                                }
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </th>
-                                                <td className="px-6 py-4">
-                                                    {grade.school_year}
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <Link
-                                                        href={route(
-                                                            "grades.edit",
-                                                            {
-                                                                grade: grade.id,
+                                                    </th>
+
+                                                    <td className="px-6 py-4">
+                                                        {/* button hapus */}
+                                                        <Link
+                                                            href="#"
+                                                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:text-blue-800 dark:hover:text-blue-400 transition-colors duration-200 flex items-center space-x-2"
+                                                            onClick={(e) =>
+                                                                handleDelete(
+                                                                    e,
+                                                                    gradeStudent.id
+                                                                )
                                                             }
-                                                        )}
-                                                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:text-blue-800 dark:hover:text-blue-400 transition-colors duration-200 flex items-center space-x-2"
-                                                    >
-                                                        Ubah
-                                                    </Link>
-                                                    <Link
-                                                        href={route(
-                                                            "gradeStudents.index",
-                                                            {
-                                                                grade: grade.id,
-                                                            }
-                                                        )}
-                                                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:text-blue-800 dark:hover:text-blue-400 transition-colors duration-200 flex items-center space-x-2"
-                                                    >
-                                                        Kelola Siswa
-                                                    </Link>
-                                                    <Link
-                                                        href={route(
-                                                            "schedules.index",
-                                                            {
-                                                                grade: grade.id,
-                                                            }
-                                                        )}
-                                                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:text-blue-800 dark:hover:text-blue-400 transition-colors duration-200 flex items-center space-x-2"
-                                                    >
-                                                        Kelola Jadwal
-                                                    </Link>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                        {grades.data.length === 0 && (
+                                                        >
+                                                            Hapus
+                                                        </Link>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        )}
+                                        {gradeStudents.data.length === 0 && (
                                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                 <td
                                                     className="w-4 p-4"
@@ -230,10 +256,10 @@ export default function Teacher(
                                     </tbody>
                                 </table>
                                 <Pagination
-                                    links={grades.links}
-                                    total={grades.total}
-                                    to={grades.to}
-                                    from={grades.from}
+                                    links={gradeStudents.links}
+                                    total={gradeStudents.total}
+                                    to={gradeStudents.to}
+                                    from={gradeStudents.from}
                                 />
                             </div>
                         </div>

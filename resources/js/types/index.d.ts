@@ -44,6 +44,14 @@ export interface Subject {
     name: string;
 }
 
+export interface GradeStudent {
+    id: number;
+    grade_id: number;
+    student_id: number;
+    grade: Grade;
+    student: Student;
+}
+
 interface PaginationLink {
     url: string | null;
     label: string;
@@ -73,14 +81,16 @@ export type PageProps<
         to: number;
         search: string | null;
     };
-    students: {
-        data: Student[];
-        links: PaginationLink[];
-        total: number;
-        from: number;
-        to: number;
-        search: string | null;
-    };
+    students:
+        | {
+              data: Student[];
+              links: PaginationLink[];
+              total: number;
+              from: number;
+              to: number;
+              search: string | null;
+          }
+        | any;
     subjects:
         | {
               data: Subject[];
@@ -99,6 +109,14 @@ export type PageProps<
         to: number;
         search: string | null;
     };
+    gradeStudents: {
+        data: GradeStudent[];
+        links: PaginationLink[];
+        total: number;
+        from: number;
+        to: number;
+        search: string | null;
+    };
 
     search: string | null;
     teacher: Teacher;
@@ -106,7 +124,10 @@ export type PageProps<
     student: Student;
     subject: Subject;
     grade: Grade;
+    gradeStudent: GradeStudent;
     teacher_id: number;
+    subject_id: number;
+    grade_id: number;
     flash: {
         message: string | null;
         success: string | null;
