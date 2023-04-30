@@ -92,7 +92,10 @@ Route::middleware(['auth:teacher'])->group(function () {
     Route::get('/dashboard/teacher', [DashboardController::class, 'teacher'])->name('dashboard.teacher');
     // presences
     Route::get('/presences/{schedule}/view', [PresenceController::class, 'view'])->name('presences.view');
-    Route::resource('presences', PresenceController::class)->names('presences');
+    Route::get('/presences/{schedule}/create', [PresenceController::class, 'create'])->name('presences.create');
+    Route::get('/presences', [PresenceController::class, 'index'])->name('presences.index');
+    Route::post('/presences/{schedule}', [PresenceController::class, 'store'])->name('presences.store');
+    Route::get('/presences/{schedule}/edit', [PresenceController::class, 'edit'])->name('presences.edit');
     // profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

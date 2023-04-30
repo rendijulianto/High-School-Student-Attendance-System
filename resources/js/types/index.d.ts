@@ -61,6 +61,20 @@ export interface Schedule {
     teach: Teach;
 }
 
+export interface Presence {
+    id: number;
+    schedule_id: number;
+    material: string;
+}
+
+export interface PrecenseDetail {
+    id: number;
+    presence_id: number;
+    student_id: number;
+    status: string;
+    is_approved: boolean;
+}
+
 interface PaginationLink {
     url: string | null;
     label: string;
@@ -136,6 +150,22 @@ export type PageProps<
         to: number;
         search: string | null;
     };
+    presences: {
+        data: Presence[];
+        links: PaginationLink[];
+        total: number;
+        from: number;
+        to: number;
+        search: string | null;
+    };
+    presenceDetails: {
+        data: PrecenseDetail[];
+        links: PaginationLink[];
+        total: number;
+        from: number;
+        to: number;
+        search: string | null;
+    };
 
     search: string | null;
     teacher: Teacher;
@@ -145,6 +175,8 @@ export type PageProps<
     grade: Grade;
     gradeStudent: GradeStudent;
     schedule: Schedule;
+    presence: Presence;
+    presenceDetail: PrecenseDetail;
     teacher_id: number;
     subject_id: number;
     grade_id: number;

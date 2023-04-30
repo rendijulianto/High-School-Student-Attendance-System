@@ -17,29 +17,35 @@ class PresenceController extends Controller
         $search = $request->get('search') ?? '';
         $grades = Auth::user()->teaches()->with('schedules')->get()->map(function ($teach) {
             return $teach->schedules->map(function ($schedule) {
-                return (object) [
-                    'schedule_id' => $schedule->id,
-                    'grade' => $schedule->grade->level . ' ' . $schedule->grade->major . ' ' . $schedule->grade->class . ' ' . $schedule->grade->school_year,
-                    'subject' => $schedule->teach->subject->name,
-                ];
+                if ($schedule->teach->teacher_id == Auth::user()->id) {
+                    return (object) [
+                        'schedule_id' => $schedule->id,
+                        'grade' => $schedule->grade->level . ' ' . $schedule->grade->major . ' ' . $schedule->grade->class . ' ' . $schedule->grade->school_year,
+                        'subject' => $schedule->teach->subject->name,
+                    ];
+                }
+                
             });
         })->flatten()->unique('schedule_id')->values();
         return Inertia::render('Presence/Index', ['grades' => $grades,  'search' => $search, 'url' => $request->url()]);
     }
 
-    public function view(Schedule $schedule)
+    public function view($schedule, Request $request)
     {
-        dd($schedule);
-        return Inertia::render('Presence/View', ['schedule' => $schedule, 'students' => $students]);
+        $search = $request->get('search') ?? '';
+        $presences = Presence::where('schedule_id', $schedule)->where('material', 'like', '%' . $search . '%')->paginate(10)->withQueryString();
+        return Inertia::render('Presence/View', ['presences' => $presences, 'schedule_id' => $schedule, 'search' => $search, 'url' => $request->url()]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($schedule, Request $request)
     {
-        //
+        $schedule = Schedule::find($schedule);
+        return Inertia::render('Presence/Create', ['schedule' => $schedule]);
     }
+
 
     /**
      * Store a newly created resource in storage.
