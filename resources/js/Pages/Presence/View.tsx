@@ -16,7 +16,7 @@ export default function Presence(
 
     useEffect(() => {
         if (data.search) {
-            get(route("grades.index"), {
+            get(route("presences.index"), {
                 preserveState: true,
                 replace: true,
                 preserveScroll: true,
@@ -69,22 +69,6 @@ export default function Presence(
                                             Tambah
                                             <FaPlusCircle className="text-white ml-1" />
                                         </Link>
-
-                                        <Link
-                                            href={route("grades.import")}
-                                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center space-x-2"
-                                        >
-                                            Import
-                                            <FaRegFileExcel className="text-white ml-1" />
-                                        </Link>
-
-                                        <Link
-                                            href={route("grades.create")}
-                                            className=" bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded flex items-center space-x-2"
-                                        >
-                                            Contoh{" "}
-                                            <FaDownload className="text-white ml-1" />
-                                        </Link>
                                     </div>
                                     <form>
                                         <label className="sr-only">
@@ -130,13 +114,13 @@ export default function Presence(
                                                 scope="col"
                                                 className="px-6 py-3"
                                             >
-                                                Nama Kelas
+                                                Materi
                                             </th>
                                             <th
                                                 scope="col"
                                                 className="px-6 py-3"
                                             >
-                                                Mata Pelajaran
+                                                Tanggal
                                             </th>
                                             <th
                                                 scope="col"
@@ -147,10 +131,10 @@ export default function Presence(
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {presences.data.map((grade: any) => (
+                                        {presences.data.map((presence: any) => (
                                             <tr
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                                                key={grade.schedule_id}
+                                                key={presence.id}
                                             >
                                                 <th
                                                     scope="row"
@@ -158,25 +142,33 @@ export default function Presence(
                                                 >
                                                     <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
                                                         <span className="font-medium text-gray-600 dark:text-gray-300">
-                                                            {grade.grade[0]}
+                                                            {
+                                                                presence
+                                                                    .material[0]
+                                                            }
                                                         </span>
                                                     </div>
                                                     <div className="pl-3">
                                                         <div className="text-base font-semibold">
-                                                            {grade.grade}
+                                                            {presence.material}
                                                         </div>
                                                     </div>
                                                 </th>
                                                 <td className="px-6 py-4">
-                                                    {grade.subject}
+                                                    {presence.date}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <Link
                                                         href={route(
-                                                            "presences.view",
+                                                            "presences.detail",
                                                             {
                                                                 schedule:
-                                                                    grade.schedule_id,
+                                                                    presence.schedule_id,
+                                                                presence:
+                                                                    presence.id,
+                                                                grade: presence
+                                                                    .schedule
+                                                                    .grade_id,
                                                             }
                                                         )}
                                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:text-blue-800 dark:hover:text-blue-400 transition-colors duration-200 flex items-center space-x-2"

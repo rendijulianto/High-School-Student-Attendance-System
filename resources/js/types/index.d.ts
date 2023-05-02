@@ -64,7 +64,10 @@ export interface Schedule {
 export interface Presence {
     id: number;
     schedule_id: number;
+    date: string;
     material: string;
+    grade: Grade;
+    teach: Teach;
 }
 
 export interface PrecenseDetail {
@@ -134,14 +137,16 @@ export type PageProps<
               search: string | null;
           }
         | any;
-    gradeStudents: {
-        data: GradeStudent[];
-        links: PaginationLink[];
-        total: number;
-        from: number;
-        to: number;
-        search: string | null;
-    };
+    gradeStudents:
+        | {
+              data: GradeStudent[];
+              links: PaginationLink[];
+              total: number;
+              from: number;
+              to: number;
+              search: string | null;
+          }
+        | any;
     schedules: {
         data: Schedule[];
         links: PaginationLink[];

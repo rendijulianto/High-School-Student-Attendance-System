@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id');
             $table->enum('status', ['S', 'I', 'A','H']);
             $table->boolean('is_approved')->default(false);
+            $table->date('date');
             $table->timestamps();
             $table->foreign('presence_id')->references('id')->on('presences')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade')->onUpdate('cascade');

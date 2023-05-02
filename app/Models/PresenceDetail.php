@@ -13,6 +13,7 @@ class PresenceDetail extends Model
         'presence_id',
         'student_id',
         'status',
+        'date',
         'is_approved',
     ];
 

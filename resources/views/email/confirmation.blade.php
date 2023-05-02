@@ -44,14 +44,21 @@
             .btn:hover {
                 background-color: #3e8e41;
             }
+            .btn.danger {
+                background-color: #f44336;
+            }
+            .btn.danger:hover {
+                background-color: #da190b;
+            }
+
         </style>
     </head>
     <body>
         <div class="container">
             <h1>Surat Konfirmasi Kehadiran</h1>
             <p>Kepada Yth,</p>
-            <p>Nama: [Nama Anda]</p>
-            <p>Siswa/i kelas [Kelas Anda]</p>
+            <p>Nama: {{$student->name}}</p>
+            <p>NIS: {{$student->nis}}</p>
             <p>Assalamu'alaikum Wr. Wb.</p>
             <p>Dengan hormat,</p>
             <p>
@@ -62,15 +69,15 @@
             <table>
                 <tr>
                     <th>Nama Mata Pelajaran</th>
-                    <td>[Nama Mata Pelajaran]</td>
+                    <td>{{$presence->schedule->teach->subject->name}}</td>
                 </tr>
                 <tr>
                     <th>Materi</th>
-                    <td>[Materi]</td>
+                    <td>{{$presence->material}}</td>
                 </tr>
                 <tr>
                     <th>Tanggal</th>
-                    <td>[Tanggal]</td>
+                    <td>{{$presence->date}}</td>
                 </tr>
             </table>
             <p>
@@ -85,7 +92,7 @@
             <button class="btn" type="submit" name="konfirmasi" value="benar">
                 Konfirmasi Benar
             </button>
-            <button class="btn" type="submit" name="konfirmasi" value="salah">
+            <button class="btn danger" type="submit" name="konfirmasi" value="salah">
                 Konfirmasi Salah
             </button>
         </div>

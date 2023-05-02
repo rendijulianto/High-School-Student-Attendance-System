@@ -96,6 +96,8 @@ Route::middleware(['auth:teacher'])->group(function () {
     Route::get('/presences', [PresenceController::class, 'index'])->name('presences.index');
     Route::post('/presences/{schedule}', [PresenceController::class, 'store'])->name('presences.store');
     Route::get('/presences/{schedule}/edit', [PresenceController::class, 'edit'])->name('presences.edit');
+    Route::get('/presencesDetail/{presence}/{schedule}/{grade}', [PresenceController::class, 'detail'])->name('presences.detail');
+    Route::post('/presencesDetail/{presence}/{schedule}/{grade}', [PresenceController::class, 'detailStore'])->name('presences.detailStore');
     // profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
